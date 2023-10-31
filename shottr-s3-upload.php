@@ -28,9 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'Bucket' => $bucket,
         'Key' => $path . '/' . $file['name'],
         'Body' => fopen($tmpPath, 'rb'),
-        'ACL' => 'public-read'
+        'ACL' => 'public-read',
+        'ContentType' => mime_content_type($tmpPath),
+        'CacheControl' => 'max-age=31536000'
       ]);
-     // [TODO] recheck aws s3 upload parameters/polices
 
       $filename = basename($result['ObjectURL']);
       $longOwnUrl = "https://{$domain}/{$path}/{$filename}";
